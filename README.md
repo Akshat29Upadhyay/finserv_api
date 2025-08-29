@@ -1,28 +1,255 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fflask3&demo-title=Flask%203%20%2B%20Vercel&demo-description=Use%20Flask%203%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fflask3-python-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994156/random/flask.png)
+# BFHL API
 
-# Flask + Vercel
+A REST API that processes arrays and returns categorized data including numbers, alphabets, and special characters.
 
-This example shows how to use Flask 3 on Vercel with Serverless Functions using the [Python Runtime](https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/python).
+## Features
 
-## Demo
+- Processes arrays containing mixed data types
+- Categorizes numbers into even and odd
+- Converts alphabets to uppercase
+- Identifies special characters
+- Calculates sum of numbers
+- Creates concatenated string with alternating case
+- Returns user information with proper formatting
 
-https://flask-python-template.vercel.app/
+## API Endpoint
 
-## How it Works
+**POST** `/bfhl`
 
-This example uses the Web Server Gateway Interface (WSGI) with Flask to enable handling requests on Vercel with Serverless Functions.
+### Request Format
 
-## Running Locally
-
-```bash
-npm i -g vercel
-vercel dev
+```json
+{
+  "data": ["a", "1", "334", "4", "R", "$"]
+}
 ```
 
-Your Flask application is now available at `http://localhost:3000`.
+### Response Format
 
-## One-Click Deploy
+```json
+{
+  "is_success": true,
+  "user_id": "akshat_kumar_17091999",
+  "email": "akshat@xyz.com",
+  "roll_number": "ABCD123",
+  "odd_numbers": ["1"],
+  "even_numbers": ["334", "4"],
+  "alphabets": ["A", "R"],
+  "special_characters": ["$"],
+  "sum": "339",
+  "concat_string": "Ra"
+}
+```
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
+## Testing with cURL
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fflask3&demo-title=Flask%203%20%2B%20Vercel&demo-description=Use%20Flask%203%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fflask3-python-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994156/random/flask.png)
+### Local Testing (when running locally)
+```bash
+# Start the server first: python api/index.py
+# Then use these commands:
+
+# Test Case 1: Example A
+curl -X POST http://localhost:5000/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["a","1","334","4","R", "$"]}'
+
+# Test Case 2: Example B
+curl -X POST http://localhost:5000/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["2","a", "y", "4", "&", "-", "*", "5","92","b"]}'
+
+# Test Case 3: Example C
+curl -X POST http://localhost:5000/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["A","ABcD","DOE"]}'
+
+# Test Case 4: Mixed data with decimals
+curl -X POST http://localhost:5000/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["10.5","abc","@","7","XYZ","#","42"]}'
+
+# Test Case 5: Only numbers
+curl -X POST http://localhost:5000/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["1","2","3","4","5","6","7","8","9","10"]}'
+
+# Test Case 6: Only alphabets
+curl -X POST http://localhost:5000/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["hello","WORLD","python","API"]}'
+
+# Test Case 7: Only special characters
+curl -X POST http://localhost:5000/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["@","#","$","%","&","*","!","?"]}'
+
+# Test Case 8: Empty array
+curl -X POST http://localhost:5000/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": []}'
+```
+
+### Deployed Testing (replace with your actual deployed URL)
+```bash
+# Replace YOUR_DEPLOYED_URL with your actual Vercel/Railway/Render URL
+# Example: https://your-app.vercel.app
+
+# Test Case 1: Example A
+curl -X POST https://YOUR_DEPLOYED_URL/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["a","1","334","4","R", "$"]}'
+
+# Test Case 2: Example B
+curl -X POST https://YOUR_DEPLOYED_URL/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["2","a", "y", "4", "&", "-", "*", "5","92","b"]}'
+
+# Test Case 3: Example C
+curl -X POST https://YOUR_DEPLOYED_URL/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["A","ABcD","DOE"]}'
+
+# Test Case 4: Mixed data with decimals
+curl -X POST https://YOUR_DEPLOYED_URL/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["10.5","abc","@","7","XYZ","#","42"]}'
+
+# Test Case 5: Only numbers
+curl -X POST https://YOUR_DEPLOYED_URL/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["1","2","3","4","5","6","7","8","9","10"]}'
+
+# Test Case 6: Only alphabets
+curl -X POST https://YOUR_DEPLOYED_URL/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["hello","WORLD","python","API"]}'
+
+# Test Case 7: Only special characters
+curl -X POST https://YOUR_DEPLOYED_URL/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["@","#","$","%","&","*","!","?"]}'
+
+# Test Case 8: Empty array
+curl -X POST https://YOUR_DEPLOYED_URL/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": []}'
+```
+
+### Error Testing
+```bash
+# Test missing data field
+curl -X POST http://localhost:5000/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{}'
+
+# Test invalid data type (not array)
+curl -X POST http://localhost:5000/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": "not an array"}'
+
+# Test malformed JSON
+curl -X POST http://localhost:5000/bfhl \
+  -H "Content-Type: application/json" \
+  -d '{"data": ["a", "b", "c"'
+```
+
+## Expected Responses
+
+### Example 1
+**Request:**
+```json
+{
+  "data": ["a", "1", "334", "4", "R", "$"]
+}
+```
+
+**Response:**
+```json
+{
+  "is_success": true,
+  "user_id": "akshat_kumar_17091999",
+  "email": "akshat@xyz.com",
+  "roll_number": "ABCD123",
+  "odd_numbers": ["1"],
+  "even_numbers": ["334", "4"],
+  "alphabets": ["A", "R"],
+  "special_characters": ["$"],
+  "sum": "339",
+  "concat_string": "Ra"
+}
+```
+
+### Example 2
+**Request:**
+```json
+{
+  "data": ["2", "a", "y", "4", "&", "-", "*", "5", "92", "b"]
+}
+```
+
+**Response:**
+```json
+{
+  "is_success": true,
+  "user_id": "akshat_kumar_17091999",
+  "email": "akshat@xyz.com",
+  "roll_number": "ABCD123",
+  "odd_numbers": ["5"],
+  "even_numbers": ["2", "4", "92"],
+  "alphabets": ["A", "Y", "B"],
+  "special_characters": ["&", "-", "*"],
+  "sum": "103",
+  "concat_string": "ByA"
+}
+```
+
+### Example 3
+**Request:**
+```json
+{
+  "data": ["A", "ABcD", "DOE"]
+}
+```
+
+**Response:**
+```json
+{
+  "is_success": true,
+  "user_id": "akshat_kumar_17091999",
+  "email": "akshat@xyz.com",
+  "roll_number": "ABCD123",
+  "odd_numbers": [],
+  "even_numbers": [],
+  "alphabets": ["A", "ABCD", "DOE"],
+  "special_characters": [],
+  "sum": "0",
+  "concat_string": "EoDdCbAa"
+}
+```
+
+## Local Development
+
+1. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+2. Run the application:
+```bash
+python api/index.py
+```
+
+3. The API will be available at `http://localhost:5000`
+
+## Deployment
+
+This API is configured for deployment on Vercel. The `vercel.json` file contains the necessary configuration for routing all requests to the Flask application.
+
+## Error Handling
+
+The API includes comprehensive error handling for:
+- Missing or invalid request data
+- Malformed JSON
+- Server errors
+
+All errors return appropriate HTTP status codes and error messages.
